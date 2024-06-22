@@ -3,6 +3,9 @@ title: "1 Discriminant analysis"
 author: "Zhehao Hu"
 date: 2024-06-20
 output: pdf_document
+tags:
+  - projComeco
+  - fileRmd
 ---
 
 # What is Linear Discriminant Analysis (LDA)?
@@ -25,7 +28,7 @@ Import Data:
 
 ```{r}
 #this is a way to open a datasheet using a txt file (which can be saved from excel)
-lizards<-(read.table("/Users/hu_zhehao/Library/Mobile Documents/com~apple~CloudDocs/Files/Obsidian/Cafe AgX HQ 2.0/004 Notes/M.Sc. Biology/Community Ecology/Practice/1-1/transect11_day.txt",header=TRUE))
+lizards<-(read.table("/Users/hu_zhehao/Library/Mobile Documents/com~apple~CloudDocs/Files/Obsidian/Cafe AgX HQ 2.0/004 Notes/M.Sc. Biology/Community Ecology/Practice/transect11_day.txt",header=TRUE))
 #to see the data, click on it at the upper pannel on the right or use the command: 
 # list(lizards) #all the data
 head(lizards) #just the first lines

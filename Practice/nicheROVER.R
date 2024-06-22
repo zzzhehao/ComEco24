@@ -107,11 +107,18 @@ aggregate(lizards[3:5], lizards[1], mean) # variable means calculated for each s
 
 # generate parameter draws from the "default" posteriors of each species
 
-nsamples <- 1e3
-system.time({
-  lizards.par <- tapply(1:nrow(lizards), lizards$Species,
-                     function(ii) niw.post(nsamples = nsamples, X = lizards[ii,3:5]))
-})
+niche.par <- function(data, index, n, pars) {
+  par <- tapply(1:nrow(data), INDEX = index,
+                function(r) niw.post(nsamples = n, X = data[r, pars]))
+}
+
+# nsamples <- 1e3
+# system.time({
+#   lizards.par <- tapply(1:nrow(lizards), lizards$Species,
+#                      function(ii) niw.post(nsamples = nsamples, X = lizards[ii,3:5]))
+# })
+
+lizards.par <- niche.par(lizards, lizards$Species, 1000, 3:5)
 
 # various parameter plots
 clrs <- c("green", "red", "blue", "orange", "black","purple") # colors for each species - example with names of colors
