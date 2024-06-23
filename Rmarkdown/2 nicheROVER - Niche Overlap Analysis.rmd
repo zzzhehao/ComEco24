@@ -22,18 +22,20 @@ knit: (function(input, ...) {
   })
 ---
 
-A new probabilistic method for quantifing n-dimensional ecological niche and niche overlap [@swanson2015].
+This is a note from the course Community Ecology offered by [Universität Hamburg](https://www.biologie.uni-hamburg.de/en.html) and led by [Dr. Paula Cabral Eterovick](https://www.researchgate.net/profile/Paula-Eterovick-2), the source code of this article and the analysis can be found in my [course repository](https://github.com/zzzhehao/ComEco24).
 
 # Niche Region and Niche Overlap Metrics
 
-This script is written by Martin Lysy, Heidi Swanson and can be found [here](https://cran.r-project.org/web/packages/nicheROVER/vignettes/ecol-vignette.html), it requires the package "nicheROVER", which can be installed directly from CRAN.
+A new probabilistic method for quantifing n-dimensional ecological niche and niche overlap [@swanson2015].
+
+We use the script written by Martin Lysy, Heidi Swanson which can be found [here](https://cran.r-project.org/web/packages/nicheROVER/vignettes/ecol-vignette.html), which requires the package "nicheROVER".
 
 ```{r setup, include=FALSE}
 library(nicheROVER)
 library(rmarkdown)
 ```
 
-"Fish" is a **fish stable isotope dataset** integrated in the package, containing values for three stable isotopes (N-15, C-13, S-34) measured in the muscle tissue of four species of arctic fish (ARCS, BDWF, LKWF, LSCS). Use `?fish` for more details.
+"Fish" is a **fish stable isotope dataset** integrated in the package, containing values for three stable isotopes (N-15, C-13, S-34) measured in the muscle tissue of four arctic fish species (ARCS, BDWF, LKWF, LSCS). Use `?fish` for more details.
 
 ```{r echo=FALSE}
 data(fish)
@@ -42,7 +44,7 @@ paged_table(fish)
 
 ## Why using SIA?
 
-**Stable isotope analysis (SIA)** is a powerful tool in ecological niche analysis. Many physicochemical and biochemical processes are sensitive to differences in the dissociation energies of molecules, which often depend on the mass of the elements from which these molecules are made. Thus, the isotopic composition of many materials (expressed as $\delta$-values), including the tissues of organisms, often contains a label of the process that created it. [@newsome2007a] These "signatures" provides detailed insights into their ecological roles and interactions
+**Stable isotope analysis (SIA)** is a powerful tool in ecological niche analysis. Many physicochemical and biochemical processes are sensitive to differences in the dissociation energies of molecules, which often depend on the mass of the elements from which these molecules are made. Thus, the isotopic composition of many materials (expressed as $\delta$-values), including the tissues of organisms, often contains a label of the process that created it [@newsome2007a]. These "signatures" provides detailed insights into their ecological roles and interactions
 
 ![Common stable isotopes and different analysis options [@newsome2007a].](/Users/hu_zhehao/Desktop/Images/Screenshot/Screenshot%202024-06-22%20at%2023.54.50.png)
 
@@ -55,17 +57,45 @@ paged_table(fish)
 
 ## Terminologies
 
-Before we start analyzing out data, there are some concepts and prior knowledge need to be checked:
+Before we start analyzing our data, there are some concepts and prior knowledge need to be checked:
 
-### Covariance, covariance matrix and correlation
+### Covariance, covariance matrix
 
+**Covariance** is a measure of the joint variability of two variables, the sign of the covariance shows the tendency, i.e. one of the three possible linear relationshipss between two variables, which are:
 
+-   negative linear relationship, covariance is \< 0
+-   no linear relationship, covariance is around 0
+-   positive linear relationship, covariance is \> 0
+
+The variance is a special case of the covariance in which the two variables are identical. The covariance itself is sensitive to the scale of the data, and it does not provide information of in what extent the two variables correlate with each other and how well the linear correlation fits the data. All these characteristics make covariance difficult to interpret, but it has become an important step stone for many interesting subsequent analysis, such as PCA, correlation analysis, etc..
+
+A **covariance matrix** is a square matrix giving the covariance between each pair of elements, which is always symmetric and the diagonal elements present the variance of each variable.
+
+For more information about covariance:
+
+-   [StatQuest](https://www.youtube.com/watch?v=qtaqvPAeEJY) on YouTube (simply and clearly explained)
 
 ### Bayesian statistics
 
 @vandeschoot2021 described the very foundation idea of the bayesian statistics as following:
 
 Bayesian statistics is an approach to data analysis based on Bayes' theorem, where available knowledge about parameters in a statistical model is updated with the information in observed data. The background knowledge is expressed as a **prior** distribution and combined with observational data in the form of a likelihood function to determine the **posterior distribution**.
+
+The bayesian statistics based on the **Bayes' theorem**, which is mathematically stated as following:
+
+$$
+P(A|B)=\frac{P(B|A)P(A)}{P(B)}
+$$
+
+where $A$ and $B$ are events and $P(B)\neq 0$, 
+- $P(A|B)$: the probability of event A occurring given that $B$ is true. It is also called the posterior probability (briefly _posterior_) of $A$ given $B$.
+- $P(B|A)$ is also a conditional probability: the probability of event $B$ occurring given that $A$ is true. It can also be interpreted as the likelihood of $A$ given a fixed $B$ because $P(B|A)=L(A|B)$. ($L$: likelihood)
+- $P(A)$ and $P(B)$ are the probabilities of observing $A$ and $B$ respectively without any given conditions; they are known as the prior probability and marginal probability. 
+
+### Further useful concepts:
+
+-   Multivariate probability distribution
+-   Random vector
 
 ## Simulating random data
 
@@ -92,7 +122,7 @@ The normal inverse-Wishart distribution allows us to learn the underlying parame
 
 **The explanation from [wikipedia](https://en.wikipedia.org/wiki/Inverse-Wishart_distribution#:~:text=In%20statistics%2C%20the%20inverse%20Wishart,of%20a%20multivariate%20normal%20distribution.)**:
 
-In statistics, the inverse Wishart distribution, also called the inverted Wishart distribution, is a probability distribution defined on real-valued positive-definite matrices. In Bayesian statistics it is used as the conjugate prior for the covariance matrix of a multivariate normal distribution.
+In statistics, the inverse Wishart distribution, also called the inverted Wishart distribution, is a probability distribution defined on real-valued positive-definite matrices. **In Bayesian statistics it is used as the conjugate prior for the covariance matrix of a multivariate normal distribution**.
 
 **Another explanation from [arxiv](https://arxiv.org/html/2405.16088v1#)**:
 
@@ -100,7 +130,9 @@ The normal-inverse-Wishart (NIW) distribution is commonly used as a prior distri
 
 **My explanation of this formula**:
 
-The probability of finding a specie given a normal distribution ($N$) of $\mu$ as niche parameter mean and $\Sigma$ as niche parameter covariance.
+The probability of finding a specie given a **normal distribution** ($N$) of $\mu$ as niche parameter mean and $\Sigma$ as niche parameter covariance.
+
+To be noted, if the parameter does not exhibit a normal distribution, other distribution 
 
 ### Drawing with `niw.post()`
 
@@ -160,7 +192,7 @@ niche.plot(niche.par = fish.par, niche.data = fish.data, pfrac = .05,
            col = clrs, xlab = expression("Isotope Ratio (per mil)"))
 ```
 
-## Benthic or pelagic fish? ??????
+## Benthic or pelagic fish???????
 
 According to @newsome2007a in table 1, also (find another source, maybe @duffilltelsnig2019), we can use isotope system $\delta^{13}C$ and $\delta^{34}$S to estimate in which water column the species live. Comparing the estimated niche described by $\delta^{13}$C and $\delta^{34}$S of ARCS and BDWF, we see ARCS has more narrow region with higher $\delta$ values, meanwhile BDWF has a broader range with much part of it having lower $\delta$ values.
 
