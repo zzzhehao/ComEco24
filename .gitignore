@@ -1,0 +1,9 @@
+.DS_Store
+.Rproj.user
+.Rhistory
+DCA/
+Data/
+*.xls
+*.xlsx
+*.txt
+*.gif
