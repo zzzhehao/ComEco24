@@ -87,10 +87,11 @@ $$
 P(A|B)=\frac{P(B|A)P(A)}{P(B)}
 $$
 
-where $A$ and $B$ are events and $P(B)\neq 0$, 
-- $P(A|B)$: the probability of event A occurring given that $B$ is true. It is also called the posterior probability (briefly _posterior_) of $A$ given $B$.
-- $P(B|A)$ is also a conditional probability: the probability of event $B$ occurring given that $A$ is true. It can also be interpreted as the likelihood of $A$ given a fixed $B$ because $P(B|A)=L(A|B)$. ($L$: likelihood)
-- $P(A)$ and $P(B)$ are the probabilities of observing $A$ and $B$ respectively without any given conditions; they are known as the prior probability and marginal probability. 
+where $A$ and $B$ are events and $P(B)\neq 0$,
+
+- $P(A|B)$: the probability of event $A$ occurring given that $B$ is true. It is also called the **posterior probability** (briefly *posterior*) of $A$ given $B$. 
+- $P(B|A)$ is also a conditional probability: the probability of event $B$ occurring given that $A$ is true. It can also be interpreted as the likelihood of $A$ given a fixed $B$ because $P(B|A)=L(A|B)$. ($L$: likelihood) 
+- $P(A)$ and $P(B)$ are the probabilities of observing $A$ and $B$ respectively without any given conditions; they are known as the **prior probability** and marginal probability.
 
 ### Further useful concepts:
 
@@ -131,8 +132,6 @@ The normal-inverse-Wishart (NIW) distribution is commonly used as a prior distri
 **My explanation of this formula**:
 
 The probability of finding a specie given a **normal distribution** ($N$) of $\mu$ as niche parameter mean and $\Sigma$ as niche parameter covariance.
-
-To be noted, if the parameter does not exhibit a normal distribution, other distribution 
 
 ### Drawing with `niw.post()`
 

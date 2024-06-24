@@ -39,6 +39,13 @@ Presented by Zhehao Hu
     - Microhabitat availability
     - Climatic Condition
 
+<!--
+Many can do this.
+Habitats, climate, geographic
+
+-> these difference leads to changes
+-->
+
 ---
 
 # The chain of changes
@@ -47,6 +54,10 @@ Presented by Zhehao Hu
 2. Changes in environmental conditions
 3. Different behavioral and physiological response
 4. Defferent **taxonomic**, **functional**, and **phylogenetic** diversity pattern
+
+<!--
+Main idea.
+-->
 
 ---
 
@@ -58,6 +69,15 @@ Presented by Zhehao Hu
 - Vegetation heterogeneity (horizontal and vertical)
 - Seasonality (precipitation, temperature)
 
+<!--
+Cerrado
+- 1:savanna
+- variance in vegetation, both horizontal and vertical
+  - horizontal: different habitats in different region
+  - vertical: multiple layers
+- seasonality: DS and RS
+-->
+
 ---
 
 # Campo sujo (CS)
@@ -66,6 +86,15 @@ Presented by Zhehao Hu
 - Lower structural heterogeneity
 - More stable climate (in evolutional scale)
 - More ancestral to local region
+- Expected to have higher functional redundancy
+
+<!--
+- boring
+
+Functional redundancy:
+- e.g. two noctual owls: (noctural predator, owl's hearing and vision, etc.)
+- habitats different
+-->
 
 ---
 
@@ -79,6 +108,7 @@ which means ...
 
 - Reduction in interspecific competition
 - Promote the increase in traits diversity among species
+- Lower functional redundancy
 
 ---
 
@@ -86,7 +116,7 @@ which means ...
 ![bg right:40%](https://www.chameleonforums.com/attachments/7772379c-359b-4fd2-98e9-eac135c75044-jpeg.319128/)
 - Diverse group in Neotropics
 - Sensitive to environmental factors
-- Lizard assemblages varies in the habitats
+- Lizard assemblages vary in the habitats
     - Species richness
     - Species abundance
     - Species composition
@@ -139,11 +169,15 @@ section {
 ![bg right:40% 90%](./images/PCoA.png)
 ## Taxonomic Diversity
 - PERMANOVA to compare SC
-- PCoA (principal coordinates analysis)
+- PCoA (principal coordinate analysis)
 
 ## Functional Diversity
 - Functional trait matrix, Dissimilarity Matrix, UPGMA, Functional dendrogram, FD index
-- **SES.FD**
+- **SES.FD** (Standard effect size of functional diversity)
+
+<!--
+SED.FD: Standard effect size of FD
+-->
 
 ---
 
