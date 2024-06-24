@@ -17,19 +17,16 @@ This is a repository for notes and scripts of the course Community Ecology offer
 
 ```
 |
-+-- RAW Notes
-|	|
-|	+-- ComEco [date] # original note taken on course, considered to be abstract
+|- RAW Notes/ # Original note taken on course, considered to be abstract and hard to read but may contain interesting information
+|	|- ComEco [date].md 
+|	+- ..
 |
-+-- Distill
-|	|
-|	+-- [No.][theme].html # Finished Notes in distill format article, meant to combine theory and practical data analysis
+|- Distill/ # Finished Notes in distill format article, meant to combine theory and practical data analysis
 |
-+-- Practice
-|	|
-|	+-- [No.][theme].Rmd # R Markdown drafts for the distill notes
-|	+-- [theme].R # Raw R scripts
+|- Rmarkdown/ # R Markdown drafts for the distill notes
 |
-+-- DCA # my previous course work operating multivariate analysis
+|- Practice/ # Raw R scripts
+|
+|- DCA/ # my previous course work operating multivariate analysis
 ```
 
