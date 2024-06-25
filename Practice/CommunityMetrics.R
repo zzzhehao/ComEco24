@@ -40,6 +40,19 @@ sRare <- rarefy(dune, raremin) # now use function rarefy (raremin can be replace
 sRare #gives an "expected"rarefied" number of species (not obs) if only 15 individuals were present
 
 par(mfrow = c(1,1))
+tidyrare <- rarecurve(dune, tidy = TRUE)
+tidyscore <- scores(tidyrare, tidy = TRUE)
+library(ggplot2)sssssssss
+library(dplyr)
+  ggplot()+
+  geom_line(data=tidyrare, aes(x=Sample, y=Species, color=Site))+
+  geom_text(data = tidyrare %>% #here we need coordinates of the labels
+              group_by(Site) %>%
+              summarise(max_sp = max(Species),
+                        max_sample = max(Sample)), #find endpoint coordinate
+              aes(x=max_Sample, y=max_sp, label = Site), check_overlap = TRUE, hjust = 0) +
+  theme_bw()
+# make a decent ggplot: https://stackoverflow.com/questions/47234809/coloring-rarefaction-curve-lines-by-metadata-vegan-package-phyloseq-package
 rarecurve(dune, col = "blue") # produces rarefaction curves 
 # squares are site numbers positioned at observed space. To "rarefy" a larger site, follow the rarefaction curve until the curve corresponds with the lesser site obs. This gives you rarefied species richness
 
