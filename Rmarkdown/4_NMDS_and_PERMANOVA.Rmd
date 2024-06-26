@@ -60,23 +60,26 @@ tadpole_env <- tadpole_env %>% select_if(~!all(is.na(.)))
 paged_table(tadpole_env)
 ```
 
-```{r showing_depth_data, fig.height=6, fig.width=6}
+```{r showing_depth_data, fig.height=6, fig.width=12}
 depth <- tadpole_env$`Depth (cm)`
 
+par(mfrow = c(1,2))
 # ordiplot(tadNMDS, type = 'n')
 ordiplot(tadNMDS, type = "p", display = 'species', ylim = c(-1, 1), xlim = c(-0.5, 1))
 orditorp(tadNMDS, display = "site", add = TRUE)
 ordisurf(tadNMDS, depth, main = 'Depth', col = 'darkgreen', add = TRUE)
 
-```
-
-```{r showing_alt_data, fig.height=6, fig.width=6}
 altitude <- tadpole_env$`altitude [m asl]`
 
 # ordiplot(tadNMDS, type = 'n')
 ordiplot(tadNMDS, type = "p", display = 'species', ylim = c(-1, 1), xlim = c(-0.5, 1))
 orditorp(tadNMDS, display = "site", add = TRUE)
 ordisurf(tadNMDS, altitude, main = 'Altitude', col = 'blue', add = TRUE)
+
+```
+
+```{r showing_alt_data, fig.height=6, fig.width=6}
+
 ```
 
 ## Try run a PERMANOVA

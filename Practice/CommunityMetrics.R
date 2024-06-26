@@ -39,19 +39,24 @@ raremin # view smallest # of obs (site 17)
 sRare <- rarefy(dune, raremin) # now use function rarefy (raremin can be replaced by another number, as long as it is equal or smaller than the smallest sample size)
 sRare #gives an "expected"rarefied" number of species (not obs) if only 15 individuals were present
 
+sRareC <- rarefy(community[,3:11], raremin)
+
 par(mfrow = c(1,1))
 tidyrare <- rarecurve(dune, tidy = TRUE)
 tidyscore <- scores(tidyrare, tidy = TRUE)
-library(ggplot2)sssssssss
+library(ggplot2)
 library(dplyr)
-  ggplot()+
-  geom_line(data=tidyrare, aes(x=Sample, y=Species, color=Site))+
+     
+
+ggplot()+
+  geom_line(data = tidyrare, aes(x=Sample, y=Species, color=Site))+
   geom_text(data = tidyrare %>% #here we need coordinates of the labels
               group_by(Site) %>%
-              summarise(max_sp = max(Species),
-                        max_sample = max(Sample)), #find endpoint coordinate
-              aes(x=max_Sample, y=max_sp, label = Site), check_overlap = TRUE, hjust = 0) +
-  theme_bw()
+              summarise(max_sp = max(Species), max_sample = max(Sample)), 
+            aes(x=max_sample, y=max_sp, label = Site), 
+            check_overlap = TRUE, hjust = 0)+
+  theme_bw()+
+  theme()
 # make a decent ggplot: https://stackoverflow.com/questions/47234809/coloring-rarefaction-curve-lines-by-metadata-vegan-package-phyloseq-package
 rarecurve(dune, col = "blue") # produces rarefaction curves 
 # squares are site numbers positioned at observed space. To "rarefy" a larger site, follow the rarefaction curve until the curve corresponds with the lesser site obs. This gives you rarefied species richness
@@ -79,7 +84,7 @@ orditorp(example_NMDS,display="sites",cex=1.25,air=0.01)
 
 treat=c(rep("Treatment1",5),rep("Treatment2",5))
 ordiplot(example_NMDS,type="n")
-ordihull(example_NMDS,groups=treat,draw="polygon",col="grey90",label=F)
+ordihull(example_NMDS,groups=treat,draw="polygon",col=c('green','blue'),label=F)
 orditorp(example_NMDS,display="species",col="red",air=0.01)
 orditorp(example_NMDS,display="sites",col=c(rep("green",5),rep("blue",5)),
          air=0.01,cex=1.25)
@@ -149,7 +154,7 @@ sRare <- rarefy(community[1,3:11], raremin) # now use function rarefy
 sRare #gives an "expected"rarefied" number of species (not obs) if only 5 individuals were present
 
 par(mfrow = c(1,1))
-rarecurve(as.data.frame(community[,3:11]), col = "blue") # produces rarefaction curves 
+rarecurve(community[,3:11], col = "blue", tidy = TRUE) # produces rarefaction curves 
 # squares are site numbers positioned at observed space. To "rarefy" a larger site, follow the rarefaction curve until the curve corresponds with the lesser site obs. This gives you rarefied species richness
 
 
@@ -200,6 +205,7 @@ orditorp(example_NMDS,display="sites",col=c(rep("green",4),rep("blue",12),rep("p
 #if you have a continuous variable, you can plot it as contour lines instead of polygons. Here is an example with elevation data.
 #you can interpret these lines like a third dimension in the graph
 elev = community$elevation
+ordiplot(example_NMDS,xlim=c(-1.4,0.8),ylim=c(-0.7,0.7),type="n")
 # Use the function ordisurf to plot contour lines
 ordisurf(example_NMDS,elev,main="",col="forestgreen")
 
@@ -215,5 +221,7 @@ orditorp(example_NMDS,display="sites",col="grey30",air=0.1, cex=1.5)
 adonis2(formula=community[,3:11]~community$elevation)
 
 adonis2(formula=community[,3:11]~community$elevation*community$block)
+
+# block p<0.05, some of the variation is explained by block
 
 
