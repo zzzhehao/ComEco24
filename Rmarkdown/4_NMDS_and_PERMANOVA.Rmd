@@ -35,8 +35,6 @@ Translate this into simplified language, it says the NMDS:
 - it is a grafical representation, it has less precision and accountability for further usage of the analysis result in compare to the PCA.
 - is an iterative algorithm 
 
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(results = 'markup')
 pacman::p_load(c("tidyverse", "dplyr", "vegan", "rmarkdown"), character.only = TRUE)
@@ -50,16 +48,26 @@ tadpole <- tadpole %>% select_if(~!all(is.na(.)))
 
 There are three columns with no value (?probably some kind of remarks while data collection), drop them: `tadpole <- tadpole %>% select_if(~!all(is.na(.)))`
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 ```{r results=FALSE}
 tadNMDS <- metaMDS(tadpole, k=2, autotransform = FALSE) 
 tidy_tadNMDS <- metaMDS(tadpole, k=2, tidy = TRUE, autotransform = FALSE) 
 #A good rule of thumb: stress > 0.05 provides an excellent representation in reduced dimensions, > 0.1 is great, >0.2 is good/ok, and stress > 0.3 provides a poor representation
 ```
+<<<<<<< HEAD
 
 -   see `?metaMDS` details 1 for more info regarding transformation and dealing with large dataset
 
 The result:
 
+=======
+- see `?metaMDS` details 1 for more info regarding transformation and dealing with large dataset
+
+The result:
+>>>>>>> main
 ```{r results='markup'}
 tadNMDS
 ```
@@ -101,4 +109,8 @@ ordisurf(tadNMDS, altitude, main = 'Altitude', col = 'blue', add = TRUE)
 
 ```{r}
 adonis2(formula = tadpole~depth*altitude)
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> main
