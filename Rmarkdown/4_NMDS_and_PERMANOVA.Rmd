@@ -22,6 +22,18 @@ knit: (function(input, ...) {
   })
 ---
 
+# NMDS
+
+The **non-metric multi-dimensional scaling (NMDS)** is, as the name implicates, the MDS for non-metric data (recall, the widely used MDS is the PCoA).
+
+According to the definition from [Wikipedia](https://en.wikipedia.org/wiki/Multidimensional_scaling#:~:text=of%20the%20dissimilarities.-,Non%2Dmetric%20multidimensional%20scaling%20(NMDS)), the NMDS finds a non-parametric monotonic relationship between the dissimilarities in the item-item matrix and the Euclidean distance between items, and the location of each item in the low-dimensional space.
+
+Translate this into simplified language, it says the NMDS: 
+
+- reduces the dimensions of the multidimensional data, but the number of dimensions are predefined, in contrast to PCA and PCoA, which always show the most important two axes. 
+- analyses distance matrix, which is commonly a dissimilarity distance matrix.
+- it is a grafical representation, it has less precision and accountability for further usage of the analysis result in compare to the PCA.
+- is an iterative algorithm 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(results = 'markup')
@@ -36,15 +48,26 @@ tadpole <- tadpole %>% select_if(~!all(is.na(.)))
 
 There are three columns with no value (?probably some kind of remarks while data collection), drop them: `tadpole <- tadpole %>% select_if(~!all(is.na(.)))`
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 ```{r results=FALSE}
 tadNMDS <- metaMDS(tadpole, k=2, autotransform = FALSE) 
 tidy_tadNMDS <- metaMDS(tadpole, k=2, tidy = TRUE, autotransform = FALSE) 
 #A good rule of thumb: stress > 0.05 provides an excellent representation in reduced dimensions, > 0.1 is great, >0.2 is good/ok, and stress > 0.3 provides a poor representation
 ```
+<<<<<<< HEAD
+
+-   see `?metaMDS` details 1 for more info regarding transformation and dealing with large dataset
+
+The result:
+
+=======
 - see `?metaMDS` details 1 for more info regarding transformation and dealing with large dataset
 
 The result:
+>>>>>>> main
 ```{r results='markup'}
 tadNMDS
 ```
@@ -86,4 +109,8 @@ ordisurf(tadNMDS, altitude, main = 'Altitude', col = 'blue', add = TRUE)
 
 ```{r}
 adonis2(formula = tadpole~depth*altitude)
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> main
