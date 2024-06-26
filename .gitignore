@@ -7,3 +7,6 @@ Data/
 *.xlsx
 *.txt
 *.gif
+.RData
+Barros 2022 Summary.md
+Folie/

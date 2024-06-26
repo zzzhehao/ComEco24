@@ -24,6 +24,7 @@ knit: (function(input, ...) {
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(dplyr)
 library(vegan)
 library(readxl)
 library(rmarkdown)
@@ -38,9 +39,9 @@ community<- read_excel("Practice/Diversity_test_data.xlsx", sheet = "Test")
 
 our samples: rarefaction set to minimal sample size of 5, a descent analysis will take this out and analyse is again.
 
+---
 
-
-# Introduction into the pacakge `vegan`
+## Data
 
 We use the data from `Diversity_test_data.xlsx`:
 
@@ -50,8 +51,32 @@ paged_table(head(community))
 ```
 
 ## Diversity
+### Introduction of diversity index
 
-`diversity()` calculates the ecological diversity indeces, with Shannon index being default, a simpson or invisimpson index can be specified.
+A diversity index is a mathematical measure of speceis diversity in a given community, it is based on the **species richness** (the number of species present) and the **species abundance** (the number of individuals per species). 
+
+There are two types of diversity indices:
+
+- dominance indices
+- information statistic indices
+
+### Shannon Index (H)
+
+$$
+H = - \sum^{s}_{i=1}p_i \ln p_i
+$$
+
+The **Shannon index** is an information statistic index, which means it assumes all species are represented in a sample and that they are randomly sampled, where $p$ is the proportion ($\frac{n}{N}$) of individuals of one particular species found ($n$) divided by the total number of individuals found ($N$), and $s$ is the number of species.
+
+### Simpson index (D)
+
+$$
+D = \frac{1}{ \sum\limits^{s}_{i=1} p_i^2}
+$$
+The **Simpson index** is a dominance index, meaning it gives more weight to common or dominant species. 
+
+
+`vegan::diversity()` calculates the ecological diversity indices, with Shannon index being default, Simpson or Invisimpson index can also be choosed.
 
 ```{r}
 simpson <- diversity(community[,3:11], "simpson") 
@@ -98,5 +123,12 @@ sRare
 
 
 ```{r}
-rarecurve(community[,3:11], col = 'blue')
+require(reshape2)
+community$transect <- rownames(community[,3:11]) 
+
+str(melt(community))
+#tidyrare <- rarecurve(community[,3:11], tidy = TRUE)
+#paged_table(tidyrare)
 ```
+
+

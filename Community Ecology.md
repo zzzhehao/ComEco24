@@ -16,6 +16,14 @@ number headings: auto, first-level 1, max 3, 1.1
 
 - [[Linear Discriminant Analysis (LDA)]] 
 
+## 1.3 References
+
+### 1.3.1 R packages publication
+
+`betapart` @baselga2012 
+- An R package for study the beta diversity
+- 
+
 # 2 Program
 
 **Week 1: Theory, seminars, and practice on statistical analyses**

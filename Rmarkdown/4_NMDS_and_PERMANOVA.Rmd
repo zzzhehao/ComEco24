@@ -1,0 +1,89 @@
+---
+title: 4 NMDS and PERMANOVA
+author:
+  - first_name: "Zhehao"
+    last_name: "Hu"
+    url: https://github.com/zzzhehao
+    affiliation: Universität Hamburg
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+fontsize: 8pt
+bibliography:
+  - "`r system('kpsewhich ../../../../005\\ Tools/Academic/Bib/MSc.bib', intern=TRUE)`"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 3
+    highlight: rstudio
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = "../Distill"
+    )
+  })
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(results = 'markup')
+pacman::p_load(c("tidyverse", "dplyr", "vegan", "rmarkdown"), character.only = TRUE)
+```
+
+```{r data_import, results='hide'}
+library(readxl)
+tadpole <- read_xls("../Data/Kaulquappen Regenwald_Daten.xls", sheet = "streams_tadpoles_matrix")[, -1]
+tadpole <- tadpole %>% select_if(~!all(is.na(.)))
+```
+
+There are three columns with no value (?probably some kind of remarks while data collection), drop them: `tadpole <- tadpole %>% select_if(~!all(is.na(.)))`
+
+
+```{r results=FALSE}
+tadNMDS <- metaMDS(tadpole, k=2, autotransform = FALSE) 
+tidy_tadNMDS <- metaMDS(tadpole, k=2, tidy = TRUE, autotransform = FALSE) 
+#A good rule of thumb: stress > 0.05 provides an excellent representation in reduced dimensions, > 0.1 is great, >0.2 is good/ok, and stress > 0.3 provides a poor representation
+```
+- see `?metaMDS` details 1 for more info regarding transformation and dealing with large dataset
+
+The result:
+```{r results='markup'}
+tadNMDS
+```
+
+```{r echo=FALSE,  fig.width=8}
+# plot(tadNMDS)
+ordiplot(tadNMDS, type = "text", ylim = c(-1, 1.1))
+```
+
+```{r import_env_data}
+tadpole_env <- read_xls("../Data/Kaulquappen Regenwald_Daten.xls", sheet = "stream_habitat_matrix")
+tadpole_env <- tadpole_env %>% select_if(~!all(is.na(.)))
+paged_table(tadpole_env)
+```
+
+```{r showing_depth_data, fig.height=6, fig.width=12}
+depth <- tadpole_env$`Depth (cm)`
+
+par(mfrow = c(1,2))
+# ordiplot(tadNMDS, type = 'n')
+ordiplot(tadNMDS, type = "p", display = 'species', ylim = c(-1, 1), xlim = c(-0.5, 1))
+orditorp(tadNMDS, display = "site", add = TRUE)
+ordisurf(tadNMDS, depth, main = 'Depth', col = 'darkgreen', add = TRUE)
+
+altitude <- tadpole_env$`altitude [m asl]`
+
+# ordiplot(tadNMDS, type = 'n')
+ordiplot(tadNMDS, type = "p", display = 'species', ylim = c(-1, 1), xlim = c(-0.5, 1))
+orditorp(tadNMDS, display = "site", add = TRUE)
+ordisurf(tadNMDS, altitude, main = 'Altitude', col = 'blue', add = TRUE)
+
+```
+
+```{r showing_alt_data, fig.height=6, fig.width=6}
+
+```
+
+## Try run a PERMANOVA
+
+```{r}
+adonis2(formula = tadpole~depth*altitude)
+```

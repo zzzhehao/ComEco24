@@ -1,0 +1,23 @@
+---
+title: 3 vegan - diversity, rarefaction, and species richness
+author:
+  - first_name: "Zhehao"
+    last_name: "Hu"
+    url: https://github.com/zzzhehao
+    affiliation: Universität Hamburg
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+fontsize: 8pt
+bibliography:
+  - "`r system('kpsewhich ../../../../005\\ Tools/Academic/Bib/MSc.bib', intern=TRUE)`"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 3
+    highlight: rstudio
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = "../Distill"
+    )
+  })
+---
