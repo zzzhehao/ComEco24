@@ -1,6 +1,10 @@
+# This script clean up the raw data of `Kaulquappen Regenwald_Daten` into a minimal usable data set for further analysis.
+
 library(tidyverse)
 library(dplyr)
 library(readxl)
+
+path <- "Data/Kaulquappen Regenwald_Daten.xls"
 
 cleanBlankCol <- function(data) {
   data <- data %>% select_if(~!all(is.na(.)))
@@ -17,15 +21,15 @@ unpackDfList <- function(ls, nm) {
 }
 
 # Import
-tadpoleHabitatRaw <- read_xls("Data/Kaulquappen Regenwald_Daten.xls", sheet = "stream_habitat_matrix")
-tadpoleCommunityRaw <- read_xls("Data/Kaulquappen Regenwald_Daten.xls", sheet = "streams_tadpoles_matrix")
-insectCommunityRaw <- read_xls("Data/Kaulquappen Regenwald_Daten.xls", sheet = "streams_insects_matrix")
-tadpole_raw <- list(tadpoleHabitatRaw, tadpoleCommunityRaw, insectCommunityRaw)
+tadpoleHabitatRaw <- read_xls(path, sheet = "stream_habitat_matrix")
+tadpoleCommunityRaw <- read_xls(path, sheet = "streams_tadpoles_matrix")
+insectCommunityRaw <- read_xls(path, sheet = "streams_insects_matrix")
+tadpoleRaw <- list(tadpoleHabitatRaw, tadpoleCommunityRaw, insectCommunityRaw)
 
 names <- c('tadpoleHabitatCleaned', 'tadpoleCommunityCleaned', 'insectCommunityCleaned')
 
-# Cleaning step to all
-tadpole_clean <- tadpole_raw %>% 
+# Cleaning step to all sheets
+tadpole_clean <- tadpoleRaw %>% 
   map(., cleanBlankCol)
 
 # Release all to global env
@@ -40,8 +44,13 @@ colnames(insectCommunityCleaned)[1] <- "stream"
 
 # Community Sheet
 colnames(tadpoleCommunityCleaned)[1] <- "stream" 
+tadpoleCommunityCleaned <- tadpoleCommunityCleaned %>% select(-tail(names(.), 7))
 
-# Seperating Functional Sheet
-tadpoleFuntionalCleaned <- tadpoleCommunityCleaned %>%
+# Separate Functional Sheet
+tadpoleFuntionalCleaned <- tadpole_clean[[2]] %>%
   select(tail(names(.), 7)) %>%
   cbind('stream' = tadpoleCommunityCleaned$stream, .)
+
+
+# Clean up env
+remove(list = ls()[grep("Raw", ls(), value = FALSE)])

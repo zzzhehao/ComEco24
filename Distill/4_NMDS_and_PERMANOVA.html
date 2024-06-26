@@ -3655,10 +3655,17 @@ distill-header .nav a {
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#nmds" id="toc-nmds">NMDS</a>
+<ul>
 <li><a href="#try-run-a-permanova" id="toc-try-run-a-permanova">Try run a PERMANOVA</a></li>
+</ul></li>
 </ul>
 </nav>
 </div>
+<h1 id="nmds">NMDS</h1>
+<p>The <strong>non-metric multi-dimensional scaling (NMDS)</strong> is, as the name implicates, the MDS for non-metric data (recall, the widely used MDS is the PCoA).</p>
+<p>According to the definition from <a href="https://en.wikipedia.org/wiki/Multidimensional_scaling#:~:text=of%20the%20dissimilarities.-,Non%2Dmetric%20multidimensional%20scaling%20(NMDS)">Wikipedia</a>, the NMDS finds a non-parametric monotonic relationship between the dissimilarities in the item-item matrix and the Euclidean distance between items, and the location of each item in the low-dimensional space.</p>
+<p>Translate this into simplified language, it says the NMDS: - reduces the dimension of the multidimensional data, but the number of dimensions are predefined, in contrast to PCA and PCoA, which always show the most important two axes. - analyses distance matrix, which is commonly a dissimilarity distance matrix.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
@@ -3677,7 +3684,7 @@ distill-header .nav a {
 <ul>
 <li>see <code>?metaMDS</code> details 1 for more info regarding transformation and dealing with large dataset</li>
 </ul>
-The result:
+<p>The result:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">tadNMDS</span></span></code></pre>
@@ -3694,7 +3701,7 @@ Distance: bray
 Dimensions: 2 
 Stress:     0.1196336 
 Stress type 1, weak ties
-Best solution was repeated 1 time in 20 tries
+Best solution was repeated 2 times in 20 tries
 The best solution was from try 0 (metric scaling or null solution)
 Scaling: centring, PC rotation, halfchange scaling 
 Species: expanded scores based on &#39;tadpole&#39; </code></pre>
@@ -3771,9 +3778,9 @@ Number of permutations: 999
 
 adonis2(formula = tadpole ~ depth * altitude)
                Df SumOfSqs      R2      F Pr(&gt;F)   
-depth           1   0.5125 0.09681 3.0800  0.006 **
-altitude        1   0.0677 0.01279 0.4068  0.926   
-depth:altitude  1   0.5536 0.10459 3.3273  0.003 **
+depth           1   0.5125 0.09681 3.0800  0.007 **
+altitude        1   0.0677 0.01279 0.4068  0.902   
+depth:altitude  1   0.5536 0.10459 3.3273  0.004 **
 Residual       25   4.1598 0.78581                 
 Total          28   5.2937 1.00000                 
 ---
